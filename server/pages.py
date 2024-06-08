@@ -23,7 +23,7 @@ number_of_message = 1
 current_question = ""
 correct_answer = ""
 overall_inattentive_score = 0
-
+response1 = ""
 @bp.route("/")
 def home():
     return "Hello, this is my Flask server!"
@@ -38,7 +38,7 @@ def check_required_files():
 
 @bp.route("/send-message", methods=["POST", "GET"])
 def send_message():
-    global number_of_message, current_question, correct_answer, overall_inattentive_score
+    global number_of_message, current_question, correct_answer, overall_inattentive_score, response1
 
     if request.method == "POST":
         try:
@@ -46,16 +46,16 @@ def send_message():
             user_message = data.get("msg", "")
 
             if number_of_message % 3 == 1:
-                response = dialogue(user_message, number_of_message)
-                print(response)
+                response = dialogue( user_message, number_of_message)
+                response1 = response
+                print("Server side", response)
                 if response.startswith("Hmm... alright"):
                     overall_inattentive_score += 1
                 number_of_message += 1
                 return jsonify({"message": response}), 200
 
             elif number_of_message % 3 == 2:
-                response = load_response()
-                follow_up = dialogue(user_message, number_of_message, response1=response)
+                follow_up = dialogue( user_message, number_of_message, response1=response1)
                 print(follow_up)
                 inattentive_score_part = (follow_up['typo'] + follow_up['not_related']) / 2
                 overall_inattentive_score += inattentive_score_part
@@ -77,7 +77,7 @@ def send_message():
                                       "names to the WHEN/WHO/WHERE keywords in the "
                                       "second part. \n\n Disclaimer! This is not a general "
                                       "knowledge quiz and the first questions only acted "
-                                      "as distractors.\n\n")
+                                      "as distracting questions.\n\n")
                 else:
                     final_message += ("Good job for taking care of yourself today! 😊 You seemed to be a little bit "
                                       "unfocused, as your answers for the distracting questions"
@@ -144,10 +144,10 @@ def send_message():
 
 
 
-def load_response():
-    with open("response1.pickle", "rb") as f:
-        response1 = pickle.load(f)
-    return response1
+# def load_response():
+#     with open("response1.pickle", "rb") as f:
+#         response1 = pickle.load(f)
+#     return response1
 
 
 def preprocess_question(question):

@@ -534,7 +534,7 @@
   ],
    "responses": [
      "That is okay too! Can you please give me a LOCATION NAME and a PERSON NAME that you associate with whatever location/region you want? (the person name can be a relative or whoever you want, not necessarily a celebrity)",
-     "Well, never say never. Can you please tell me WHEN you last visited another location?",
+     "Well, never say never. Can you please tell me WHEN did you last visit another location?",
      "Well, never say never. Can you please give the the LOCATION NAME of your go-to tourist destination?"
    ]
   },

@@ -120,16 +120,7 @@ visited_location_questions = ['Have you ever visited Bucharest?',
                               'Did you ever travel to Kremlin?',
                               'Did you visit any major city from Romania recently?']
 
-# entity_tags = ["negative_response_ENTITY", "positive_response_ENTITY"]
-# entity_questions = ['Have you ever heard of Cher?',
-#                     'Have you ever heard of Madonna?',
-#                     'Have you ever heard of Maria Tanase?',
-#                     'Have you ever heard of Gheorghe Zamfir?',
-#                     'Did you ever see Gheorghe Hagi live on television?',
-#                     'Did you ever see Nadia Comaneci live on television?',
-#                     'Did you ever see Simona Halep live on television?']
 initial_question = random.choice(visited_location_questions)
-# entity_question = random.choice(entity_questions)
 
 # LOCATION ANSWERS
 
@@ -138,29 +129,29 @@ def dialogue(user_message, number_of_message, response1=None):
     inattentive = {'typo': 0, 'not_related': 0}
     print("Firstly, you are going to answers some questions about tourist destinations! Relax, there are no right or wrong answers.")
     print(initial_question)
-
-    if number_of_message ==1:
+    print("message number", message)
+    if number_of_message % 3 == 1:
         correct_message, edit_distance = correct_sentence(message) #corrected typos
         message = correct_message
-        print(message)
+
         if edit_distance > 0:
             inattentive['typo'] += edit_distance
         ints = predict_class(message, visited_location_tags)
         if len(ints) > 0:
             res = get_response(ints, intents)
         else:
-            inattentive['not_related'] +=1
+            inattentive['not_related'] += 1
             res = "Hmm... alright! Can you tell me your best year of your life, according to you?" ## Such an answer is not recognized
 
         return res
 
-
-    if number_of_message == 2:
+    if number_of_message % 3 == 2:
         correct_message, edit_distance = correct_sentence(message) #corrected typos
         message = correct_message
         print(message)
         if edit_distance > 0:
             inattentive['typo'] += edit_distance
+        print("question asked by the bot", response1)
         ### combined questions
         if 'LOCATION NAME' in response1 and 'PERSON NAME' in response1:
             location_names = extract_locations(message)
@@ -192,7 +183,7 @@ def dialogue(user_message, number_of_message, response1=None):
             if len(person_names) == 0:
                 inattentive['not_related'] += 1
             print(person_names)
-
+        number_of_message = 1
         return inattentive
 
 
