@@ -6,12 +6,12 @@ from pprint import pprint
 import time
 from pinecone import Pinecone, ServerlessSpec
 import os
-from Dataframes import history_df, sport_df, music_df, create_pinecone_database, get_passage_texts
-from QuestionGeneration import generate_questions
+from dataframes import history_df, sport_df, music_df, create_pinecone_database, get_passage_texts
+from question_generation import generate_questions
 import json
 from dotenv import load_dotenv, find_dotenv
 
-print("ExtractiveQuestionAnswering script is running...")
+print("extractive_question_answering script is running...")
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 retriever = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1', device=device)
@@ -106,9 +106,9 @@ def extract_answer(question, passage_text):
     return sorted_result
 
 
-history_json_path = r"D:\University\pythonProject1\ExtractiveQuestionAnswering\history_question_answer_pairs.json"
-sport_json_path = r"D:\University\pythonProject1\ExtractiveQuestionAnswering\sport_question_answer_pairs.json"
-music_json_path = r"D:\University\pythonProject1\ExtractiveQuestionAnswering\music_question_answer_pairs.json"
+history_json_path = r"/extractive_question_answering\history_question_answer_pairs.json"
+sport_json_path = r"/extractive_question_answering\sport_question_answer_pairs.json"
+music_json_path = r"/extractive_question_answering\music_question_answer_pairs.json"
 history_json_list = []
 sport_json_list = []
 music_json_list = []

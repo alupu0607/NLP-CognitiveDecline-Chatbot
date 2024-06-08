@@ -3,7 +3,7 @@ import json
 import pickle
 import re
 import numpy as np
-#from IntentPrediction.Typos import correct_sentence
+#from intent_prediction.Typos import correct_sentence
 import nltk
 from keras.src.saving import load_model
 from nltk.stem import WordNetLemmatizer
@@ -12,10 +12,10 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 #from entities import extract_locations, extract_dates, extract_people_names
 sid = SentimentIntensityAnalyzer()
 lemmatizer = WordNetLemmatizer()
-intents = json.loads(open(r'D:\University\pythonProject1\IntentPrediction\intents.json').read())
-words = pickle.load(open(r'D:\University\pythonProject1\IntentPrediction\words.pkl', 'rb'))
-classes = pickle.load(open(r'D:\University\pythonProject1\IntentPrediction\classes.pkl', 'rb'))
-model = load_model(r'D:\University\pythonProject1\IntentPrediction\chatbot_model.h5')  #The output will be numerical data
+intents = json.loads(open(r'D:\University\PythonProject1\intent_prediction\intents.json').read())
+words = pickle.load(open(r'D:\University\PythonProject1\intent_prediction\words.pkl', 'rb'))
+classes = pickle.load(open(r'D:\University\PythonProject1\intent_prediction\classes.pkl', 'rb'))
+model = load_model(r'D:\University\PythonProject1\intent_prediction\chatbot_model.h5')  # The output will be numerical data
 
 
 ## ENTITIES
@@ -55,7 +55,7 @@ def extract_dates(text):
 from symspellpy import SymSpell
 import Levenshtein as lev
 sym_spell = SymSpell(max_dictionary_edit_distance=2, prefix_length=7)
-dictionary_path = r"D:\University\pythonProject1\IntentPrediction\frequency_dictionary_en_82_765.txt"
+dictionary_path = r"/intent_prediction\frequency_dictionary_en_82_765.txt"
 sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
 
 def correct_sentence(input_term):
