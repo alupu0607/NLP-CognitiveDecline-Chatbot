@@ -3,7 +3,10 @@ import pandas as pd
 from tqdm.auto import tqdm
 import pickle
 
-def create_dataframe(filter_function, dataset_name='vblagoje/wikipedia_snippets_streamed', total_doc_count = 1500):
+
+def create_dataframe(filter_function,
+                     dataset_name='vblagoje/wikipedia_snippets_streamed',
+                     total_doc_count = 1500):
     wiki_data = load_dataset(dataset_name, split='train', streaming=True).shuffle(seed=960)
     filtered_data = wiki_data.filter(filter_function)
     docs = []
